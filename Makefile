@@ -18,11 +18,17 @@ PROJECT_VERSION=$(shell cat VERSION)
 
 #--
 # artifact name
-ARTIFACT=speedtest_exporter
+ARTIFACT=speedtest-exporter
 
 #--
 # package name
-PACKAGE=${ARTIFACT}-${VERSION}.zip
+PACKAGE=${ARTIFACT}-${PROJECT_VERSION}.zip
+
+#-------------------------------------------------------------------------------
+# Docker variables
+#-------------------------------------------------------------------------------
+DOCKER_IMAGE_NAME=fbarmes/speedtest-exporter
+DOCKER_IMAGE_VERSION=$(shell cat VERSION)
 
 
 #-------------------------------------------------------------------------------
@@ -72,5 +78,10 @@ ${TARGET_DIR}/deps.touch:
 
 #-------------------------------------------------------------------------------
 .PHONY: build
-build:
+build: deps
 	cp -rp ${SRC_DIR}/* ${TARGET_DIR}/${ARTIFACT}/
+
+#-------------------------------------------------------------------------------
+.PHONY: docker-build
+docker-build: build
+	docker build -t ${DOCKER_IMAGE_NAME} .
