@@ -38,7 +38,7 @@ class OoklaClient:
     #-------------------------------------------------------------------------------
     """ convert bytes into Mb
     """
-    def bytes_to_mbits(bytes):
+    def bytes_to_mbits(self, bytes):
         mbits = ( bytes * 8 )/(1024*1024)
         return round(mbits,2)
 
