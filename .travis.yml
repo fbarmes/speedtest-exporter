@@ -1,8 +1,9 @@
 #-- Choose build environment
-# virt: lxd               # LXD container
 os: linux
-# dist: focal             # Use Ubuntu 20
-language: shell
+dist: xenial
+language: python
+python:
+  - "3.6"
 
 
 #-- Choose which branches are built
