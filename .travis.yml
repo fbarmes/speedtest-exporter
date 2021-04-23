@@ -17,18 +17,40 @@ branches:
 services:
   - docker
 
+
+
+
+stages:
+  - name: build-app
+  - name: build-docker
+  - name: deploy
+
+
 #-- Dependencies
 install:
   # install any dependencies required
   skip
 
-script:
-  - make docker-build-arm
-  # - make docker-build-x64
 
+#-- define jobs and stages
+jobs:
+  include:
+    # Build application
+    - stage: build-app
+      script: make build
+    # Build docker images in parallel
+    - stage: build-docker
+      script: make docker-build-arm
+    -
+      script: make docker-build-x64
+    # docker push
+    - stage: deploy
+      script: make docker-push
+      if: branch = develop
 
-deploy:
-  provider: script
-  script: make docker-push
-  on:
-    branch: develop
+#-- deploy to docker hub
+# deploy:
+#   provider: script
+#   script: make docker-push
+#   on:
+#     branch: develop
