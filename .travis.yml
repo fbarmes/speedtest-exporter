@@ -1,0 +1,35 @@
+#-- Choose build environment
+os: linux
+dist: xenial
+
+language: python
+python:
+  - "3.7"
+
+
+#-- Choose which branches are built
+branches:
+  only:
+    - master
+    - develop
+
+#-- Enable support services
+services:
+  - docker
+
+#-- Dependencies
+install:
+  # install any dependencies required
+  skip
+
+#-- Build script
+script:
+  - make docker-build-arm
+  - make docker-build-x64
+
+#-- Deploy
+deploy:
+  provider: script
+  script: make docker-push
+  on:
+    branch: master

@@ -1,0 +1,4 @@
+
+@reboot root /opt/speedtest-exporter/speedtest_runner.py --json-file /opt/data/speedtest/speedtest.json --csv-file /opt/data/speedtest/speedtest.csv > /proc/1/fd/1 2>&1
+
+*/15 * * * * root /opt/data/speedtest/speedtest-exporter/speedtest_runner.py --json-file /opt/data/speedtest/speedtest.json --csv-file /opt/speedtest.csv > /proc/1/fd/1 2>&1
