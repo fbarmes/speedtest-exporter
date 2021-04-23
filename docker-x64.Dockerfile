@@ -1,56 +1,54 @@
 FROM debian:buster-slim
 
-#-------------------------------------------------------------------------------
-# update package list
-#-------------------------------------------------------------------------------
-RUN apt-get update
-
 
 #-------------------------------------------------------------------------------
-# install speedtest
+# install system packages
 #-------------------------------------------------------------------------------
-RUN \
-  apt-get install -y gnupg1 apt-transport-https dirmngr
-
-
-# Other non-official binaries will conflict with Speedtest CLI
-# Example how to remove using apt-get
-# sudo apt-get remove speedtest-cli
 
 RUN \
+  #
+  # update system
+  #
+  apt-get update &&\
+  #
+  # system basics
+  #
+  apt-get install -y procps cron rsyslog &&\
+  #
+  # dependencies
+  #
+  apt-get install -y gnupg1 apt-transport-https dirmngr &&\
+  #
+  # install speedtest
+  #
   export INSTALL_KEY=379CE192D401AB61 &&\
   apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ${INSTALL_KEY} &&\
   echo "deb https://ookla.bintray.com/debian generic main" | tee  /etc/apt/sources.list.d/speedtest.list &&\
   apt-get update &&\
-  apt-get install -y speedtest
-
-
-#-------------------------------------------------------------------------------
-# install python
-#-------------------------------------------------------------------------------
-RUN \
+  apt-get install -y speedtest &&\
+  #
+  # install python
+  #
   apt-get install -y python3
 
-#-------------------------------------------------------------------------------
-# Environment
-#-------------------------------------------------------------------------------
-ENV ST_ARG_SERVER_ID=""
-
 
 #-------------------------------------------------------------------------------
-# install python
+# install exporter
 #-------------------------------------------------------------------------------
 COPY  target/speedtest-exporter /opt/speedtest-exporter
 
+
 #-------------------------------------------------------------------------------
-# Entrypoint
+# system files and entrypoint
 #-------------------------------------------------------------------------------
-# COPY ./root/ /
-# RUN chmod 755 /docker-entrypoint-*.sh
+COPY ./dockerroot/ /
+RUN chmod 755 /docker-entrypoint*.sh
+
 
 #-------------------------------------------------------------------------------
 # workdir
 #-------------------------------------------------------------------------------
+EXPOSE 9100
 WORKDIR /opt/speedtest-exporter
 
-# ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
