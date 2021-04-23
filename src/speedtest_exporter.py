@@ -9,6 +9,7 @@ from prometheus_client import make_wsgi_app, Gauge
 
 #-- standard dependencies
 import logging
+import getopt
 import sys
 import json
 
@@ -54,7 +55,7 @@ def usage():
     print(sys.argv[0])
     print("""
         \t--listen-address 0.0.0.0:9100
-        \t-f /tmp/speedtest.json
+        \t-f, --json-file /tmp/speedtest.json
     """)
 
 
@@ -94,8 +95,33 @@ def load_data_from_file(filename):
 """
 def main():
     global ookla_client
+    global data_source_file
 
     logger.info("Speedtest exporter Start")
+
+
+    #-- get command line options
+    try:
+        shortopts="hf:"
+        longopts=["help","json-file=","listen-address="]
+        opts, args = getopt.getopt(sys.argv[1:], shortopts, longopts )
+    except getopt.GetoptError as err:
+        print(str(err))
+        usage()
+        sys.exit(2)
+
+    #-- handle command line options
+    for o, value in opts:
+        if o in ("-h", "--help"):
+            usage()
+            sys.exit()
+        elif o in ("-f", "--json-file"):
+            data_source_file=value
+        elif o in ("--listen-address"):
+            http_listen_address=value
+        else:
+            assert False, "unhandled option {}".format(o)
+
 
     #-- instanciate ooklaClient
     ookla_client=OoklaClient()
