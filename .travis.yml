@@ -33,8 +33,8 @@ jobs:
       script:
         - make docker-build-arm
         - make docker-build-x64
-        - make docker-push
-          if: branch = master
+        # - make docker-push
+        #   if: branch = master
 
     # - stage: deploy
     #   script:
