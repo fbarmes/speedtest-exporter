@@ -65,13 +65,22 @@ def data_to_prometheus_text(speedtest_data):
 """ Convert speedtest data to csv line
 """
 def data_to_csv_line(speedtest_data):
-    sep=','
-    result = "";
-    result += speedtest_data['datetime'] + sep
-    result += speedtest_data['ping'] + sep
-    result += speedtest_data['download'] + sep
-    result += speedtest_data['upload']
-    result += '\n'
+
+
+    result = "{},{},{},{}\n".format(
+        speedtest_data['datetime'],
+        speedtest_data['ping'],
+        speedtest_data['download'],
+        speedtest_data['upload']
+    )
+
+    # sep=','
+    # result = "";
+    # result += speedtest_data['datetime'] + sep
+    # result += speedtest_data['ping'] + sep
+    # result += speedtest_data['download'] + sep
+    # result += speedtest_data['upload']
+    # result += '\n'
     return result
 
 #-------------------------------------------------------------------------------
