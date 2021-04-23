@@ -22,12 +22,14 @@ install:
   # install any dependencies required
   skip
 
+#-- Build script
 script:
   - make docker-build-arm
   - make docker-build-x64
 
+#-- Deploy
 deploy:
   provider: script
   script: make docker-push
   on:
-    branch: develop
+    branch: master
