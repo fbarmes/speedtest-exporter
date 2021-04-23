@@ -147,5 +147,10 @@ docker-login:
 
 #-------------------------------------------------------------------------------
 .PHONY: docker-push
-docker-push: docker-build docker-login
-	docker push ${DOCKER_IMAGE_NAME}
+docker-push: docker-build-arm docker-build-x64 docker-login
+	#
+	docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}-arm ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}-arm
+	docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}-x64 ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}-x64
+	#
+	docker push ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}-arm
+	docker push ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}-x64
