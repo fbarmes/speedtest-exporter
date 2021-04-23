@@ -68,6 +68,8 @@ init:
 .PHONY: clean
 clean:
 	rm -rf ${TARGET_DIR}
+	rm -rf src/__pycache__
+	rm -rf bin
 
 
 #-------------------------------------------------------------------------------
