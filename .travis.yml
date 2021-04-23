@@ -1,7 +1,7 @@
 #-- Choose build environment
-virt: lxd               # LXD container
+# virt: lxd               # LXD container
 os: linux
-dist: focal             # Use Ubuntu 20
+# dist: focal             # Use Ubuntu 20
 language: shell
 
 
