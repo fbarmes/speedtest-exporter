@@ -20,25 +20,13 @@ install:
   # install any dependencies required
   skip
 
-#-- Define stage order and conditions
-stages:
-  - name: build
-  # - name: deploy
-  #   if: branch = master
+script:
+  - make docker-build-arm
+  - make docker-build-x64
 
-#-- define jobs and stages
-jobs:
-  include:
-    - stage: build
-      script:
-        - make docker-build-arm
-        - make docker-build-x64
-        # - make docker-push
-        #   if: branch = master
 
-    # - stage: deploy
-    #   script:
-    #     - echo "Push to docker hub"
-    #     - make docker-build
-    #     - make docker-push
-    #     - make docker-push-latest
+# deploy:
+#   provider: script
+#   script: make docker-push
+#   on:
+#     branch: master
