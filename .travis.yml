@@ -24,7 +24,7 @@ install:
 
 script:
   - make docker-build-arm
-  - make docker-build-x64
+  # - make docker-build-x64
 
 
 deploy:
