@@ -27,8 +27,8 @@ script:
   - make docker-build-x64
 
 
-# deploy:
-#   provider: script
-#   script: make docker-push
-#   on:
-#     branch: master
+deploy:
+  provider: script
+  script: make docker-push
+  on:
+    branch: master
