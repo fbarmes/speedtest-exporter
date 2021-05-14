@@ -29,9 +29,15 @@ script:
 
 #-- Deploy
 deploy:
-  provider: script
-  script:
-    - make docker-push
-    - make docker-push-latest
-      on:
-        branch: master
+  - provider: script
+    script:
+      - make docker-push
+    on:
+      branch: develop
+
+  - provider: script
+    script:
+      - make docker-push
+      - make docker-push-latest
+    on:
+      branch: master
