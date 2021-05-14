@@ -160,7 +160,7 @@ docker-push: docker-login
 
 #-------------------------------------------------------------------------------
 .PHONY: docker-push-latest
-docker-push: docker-login
+docker-push-latest: docker-login
 	#
 	docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}-arm ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:latest-arm
 	docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}-x64 ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:latest-x64
