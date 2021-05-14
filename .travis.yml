@@ -30,6 +30,8 @@ script:
 #-- Deploy
 deploy:
   provider: script
-  script: make docker-push
+  script:
+    - make docker-push
+    - make docker-push-latest
   on:
     branch: master
