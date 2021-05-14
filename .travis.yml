@@ -33,5 +33,5 @@ deploy:
   script:
     - make docker-push
     - make docker-push-latest
-  on:
-    branch: master
+      on:
+        branch: master
