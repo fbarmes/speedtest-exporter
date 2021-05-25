@@ -21,7 +21,7 @@ from ookla_client import OoklaClient
 # setup logging
 #-------------------------------------------------------------------------------
 logger = logging.getLogger('root')
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 ch = logging.StreamHandler(sys.stdout)
 formatter=logging.Formatter("[%(asctime)s] [%(levelname)8s]: %(message)s", "%Y-%m-%d %H:%M:%S")
 ch.setFormatter(formatter)
@@ -86,8 +86,21 @@ def metrics_page():
 """ load data from file
 """
 def load_data_from_file(filename):
-    with open(filename) as json_file:
-        data = json.load(json_file)
+
+    data = {
+        'datetime':0,
+        'ping':0,
+        'download':0,
+        'upload':0
+    }
+
+    try:
+        with open(filename) as json_file:
+            data = json.load(json_file)
+    except Exception as e:
+        logger.error(e)
+        pass
+
     return data
 
 #-------------------------------------------------------------------------------
