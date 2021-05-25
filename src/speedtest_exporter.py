@@ -96,6 +96,7 @@ def load_data_from_file(filename):
 def main():
     global ookla_client
     global data_source_file
+    global http_listen_address
 
     logger.info("Speedtest exporter Start")
 

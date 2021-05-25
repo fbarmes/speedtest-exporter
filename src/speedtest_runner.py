@@ -18,7 +18,7 @@ from ookla_client import OoklaClient
 # setup logging
 #-------------------------------------------------------------------------------
 logger = logging.getLogger('root')
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 ch = logging.StreamHandler(sys.stdout)
 formatter=logging.Formatter("[%(asctime)s] [%(levelname)8s]: %(message)s", "%Y-%m-%d %H:%M:%S")
 ch.setFormatter(formatter)
