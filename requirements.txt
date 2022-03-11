@@ -1,4 +1,4 @@
-flask==1.1.2
+flask==2.0
 waitress==2.0.0
 prometheus_client==0.10.1
 tzlocal==2.1
