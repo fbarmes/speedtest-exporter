@@ -8,16 +8,19 @@ FROM ${BASE_IMAGE} as base
 
 #-- install system packages
 RUN \
+  #
   # update
+  #
   apt-get update &&\
+  #
   # python
+  #
   apt-get install -y python3 &&\
+  #
   # install speedtest
-  apt-get install -y gnupg1 apt-transport-https dirmngr &&\
-  export INSTALL_KEY=379CE192D401AB61 &&\
-  apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ${INSTALL_KEY} &&\
-  echo "deb https://ookla.bintray.com/debian generic main" | tee  /etc/apt/sources.list.d/speedtest.list &&\
-  apt-get update &&\
+  #
+  apt-get install -y curl &&\
+  curl -s https://install.speedtest.net/app/cli/install.deb.sh | bash &&\
   apt-get install -y speedtest
 
 
