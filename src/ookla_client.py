@@ -6,6 +6,7 @@ import tzlocal
 import datetime
 
 logger = logging.getLogger('root')
+logger.setLevel(logging.INFO)
 
 class OoklaClient:
 
@@ -91,6 +92,7 @@ class OoklaClient:
         if ("type" in json_data) and (json_data["type"] == "result") :
             # there is a result
             logger.debug("there is a result")
+            logger.debug(json.dumps(json_data, indent=4, sort_keys=True))
             result['ping'] = "{:0.2f}".format(json_data['ping']['latency'])
             result['download'] = "{:0.2f}".format(self.bytes_to_mbits(json_data['download']['bandwidth']))
             result['upload'] = "{:0.2f}".format(self.bytes_to_mbits(json_data['upload']['bandwidth']))
