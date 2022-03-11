@@ -39,7 +39,7 @@ QEMU_VERSION=v5.2.0-2
 QEMU_URL=https://github.com/multiarch/qemu-user-static/releases/download/${QEMU_VERSION}/qemu-arm-static.tar.gz
 
 #-- base image name per architecture
-BASE_IMAGE_ARM=fbarmes/rpi-debian:1.0-SNAPSHOT-buster-slim
+BASE_IMAGE_ARM=fbarmes/rpi-debian:1.0-buster-slim
 
 BASE_IMAGE_X64=debian:buster-slim
 
@@ -116,6 +116,23 @@ bin/qemu-arm-static:
 	wget ${QEMU_URL} --output-document bin/qemu-arm-static.tar.gz
 	tar -zxvf bin/qemu-arm-static.tar.gz -C ./bin
 	rm bin/qemu-arm-static.tar.gz
+
+
+
+#-------------------------------------------------------------------------------
+.PHONY: docker-build-base
+docker-build-base: init
+
+	#-- register cpu emulation
+	docker run --rm --privileged multiarch/qemu-user-static:register --reset
+
+	docker build \
+		--build-arg BASE_IMAGE=${BASE_IMAGE_ARM} \
+		-t speedtest-exporter-base \
+		--target base \
+		-f Dockerfile \
+		.
+
 
 #-------------------------------------------------------------------------------
 .PHONY: docker-build-dev
